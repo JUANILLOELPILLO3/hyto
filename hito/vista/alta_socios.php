@@ -1,6 +1,6 @@
 <?php
-require '../config/conexion.php';
-require_once '../controladora/SociosController.php';
+require '.o./config/conexion.php';
+require_once '../cntroladora/sociosController.php';
 
 $conexion = new Conexion();
 if($_SERVER['REQUEST_METHOD']=='POST'){
@@ -11,7 +11,8 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     $plan=$_POST['plan'];
     $suscripcion=$_POST['suscripcion'];
     $datos="INSERT INTO socios (nombre,apellidos,email,edad,plan,suscripcion) Values('$nombre','$apeliidos,'$email','$edad','$plan','$suscripcion')";
-    if($conexion->conexion->quey($datos)==TRUE){
+    if($conexion->conexion->query($datos)==TRUE){
         echo"<div class='alert alert-success'>operacion completada.</div>";
         
     }
+}

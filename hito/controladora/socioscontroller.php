@@ -26,5 +26,7 @@ class socioscontroladora{
     public function eliminarSocio($id_socio) {
         $this->modelo->eliminarSocio($id_socio);
     }
+    public function elegirpack($id_socio,$edad,$plan,$suscripcion){
+        return $this->modelo->elegirpack($id_socio,$edad,$plan,$suscripcion);
+    }
 }
-

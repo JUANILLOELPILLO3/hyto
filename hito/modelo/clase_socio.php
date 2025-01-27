@@ -62,6 +62,56 @@ class socio {
         }
 
         $stmt->close();
+        
+    }
+    public function elegirpack($id_socio,$edad,$plan,$suscripcion){
+        if($edad<18){
+            $query="UPDATE socios SET pack='infantil' WHERE id_socio=?";
+            $stmt = $this->conexion->conexion->prepare($query);
+            $stmt->bind_param("i",$id_socio);
+            $stmt->execute();
+            echo "Pack agregado correctamente: infantil";
+            return;
+        }
+    
+        $opciones = [];
+        if($plan == 'basico' && $suscripcion == 'anual' && $edad > 18){
+            $opciones = ['deportes', 'cine', 'infantil'];
+        } elseif($plan == 'basico' && $suscripcion == 'mensual' && $edad > 18){
+            $opciones = ['cine', 'infantil'];
+        } elseif($plan == 'premium' && $suscripcion == 'anual' && $edad > 18){
+            $opciones = ['deportes', 'cine', 'infantil'];
+        } else {
+            echo "No hay opciones disponibles para este usuario.";
+            return;
+        }
+    
+        echo "Estas son tus opciones: " . implode(", ", $opciones) . "\n";
+    
+        $seleccionados = [];
+    
+        while (true) {
+            $opcion = $_POST['opcion'] ?? readline("Escribe el nombre del pack que deseas (o 'no' para salir): ");
+            if (strtolower($opcion) === 'no') {
+                echo "Proceso finalizado. Packs seleccionados: " . implode(", ", $seleccionados) . "\n";
+                break;
+            }
+    
+            if (in_array($opcion, $opciones) && !in_array($opcion, $seleccionados)) {
+                $query = "UPDATE socios SET pack = ? WHERE id_socio = ?";
+                $stmt = $this->conexion->conexion->prepare($query);
+                $stmt->bind_param("si", $opcion, $id_socio);
+                $stmt->execute();
+                $seleccionados[] = $opcion;
+                echo "Pack agregado correctamente: $opcion\n";
+            } elseif (in_array($opcion, $seleccionados)) {
+                echo "Este pack ya fue seleccionado.\n";
+            } else {
+                echo "Opción no válida. Intenta nuevamente.\n";
+            }
+    
+            // Para entorno web, redefine $_POST['opcion'] para permitir múltiples iteraciones
+            unset($_POST['opcion']);
+        }
     }
 }
-?>

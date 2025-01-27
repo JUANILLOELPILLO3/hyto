@@ -24,6 +24,8 @@ $socios = $controller->listarSocios();
                     <th>Edad</th>
                     <th>plan</th>
                     <th>suscripcion</th>
+                    <th>pack</th>
+                    <th>TOTAL</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -38,9 +40,13 @@ $socios = $controller->listarSocios();
                         <td><?= $socio['plan'] ?></td>
                         <td><?= $socio['suscripcion'] ?></td>
                         <td>
+                            <a href="elegir_pack.php?id=<?= $socio['id_socio']?> "class="btn btn-danger btn-sm">pack</a>
+                        </td>
+                        <td>
+                        <a href="pack_socio.php?id=<?= $socio['id_socio']?> "class="btn btn-danger btn-sm">TOTAL</a>
+                        <td>
                             <a href="editar_socio.php?id=<?= $socio['id_socio'] ?>" class="btn btn-warning btn-sm">Editar</a>
                             <a href="eliminar_socio.php?id=<?= $socio['id_socio'] ?>" class="btn btn-danger btn-sm">Eliminar</a>
-                        </td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
